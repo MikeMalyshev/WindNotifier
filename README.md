@@ -28,3 +28,6 @@ Back-end for telegram bot WindNotifier
   - Таблица локаций;
   - Таблица прогнозов;
 - Docker / DockerCompose.
+
+### Диаграма таблиц SQL
+![alt text](https://github.com/MikeMalyshev/WindNotifier/blob/dev/sql/db_diagram.png?raw=true)
