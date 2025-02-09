@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	wa := weatheragent.New( /* TODO */ )
+	wa := weatheragent.New(nil /* TODO */)
 	wa.Start()
 }
