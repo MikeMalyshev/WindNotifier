@@ -2,7 +2,6 @@ package weatheragent
 
 import (
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
 
 type WeatherAgent struct {
@@ -28,7 +27,6 @@ func (wa *WeatherAgent) defaultHandler(c echo.Context) error {
 
 func (wa *WeatherAgent) Start() {
 	wa.echoInstance = echo.New()
-	wa.echoInstance.Use(middleware.Logger())
 
 	wa.echoInstance.GET("/", wa.defaultHandler)
 	wa.echoInstance.Start(":8181")
