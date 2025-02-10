@@ -45,13 +45,13 @@ func (wa *WeatherAgent) defaultHandler(c echo.Context) error {
 
 	if c.FormValue("forecast") == "true" {
 		var (
-			current Weather
-			err     error
+			forecast Weather
+			err      error
 		)
 
 		ts := c.FormValue("time")
 		if len(ts) == 0 {
-			current, err = wa.forecastProvider.GetForecast(lon, lat, time.Now())
+			forecast, err = wa.forecastProvider.GetForecast(lon, lat, time.Now())
 			if err != nil {
 				return c.String(500, err.Error())
 			}
@@ -60,13 +60,13 @@ func (wa *WeatherAgent) defaultHandler(c echo.Context) error {
 			if err != nil {
 				return c.String(400, "time must be in RFC3339 format")
 			}
-			current, err = wa.forecastProvider.GetForecast(lon, lat, tm)
+			forecast, err = wa.forecastProvider.GetForecast(lon, lat, tm)
 		}
 
 		if err != nil {
 			return c.String(500, err.Error())
 		}
-		resp.Current = current
+		resp.Forecast = forecast
 	}
 	return c.JSON(200, resp)
 }
