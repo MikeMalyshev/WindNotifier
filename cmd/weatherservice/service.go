@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
-	wa := weatheragent.New(nil /* TODO */)
+	// Weather agent будет позже переписан на использование OpenMeteo
+	wa := weatheragent.New(nil, nil)
 	wa.Start()
 }
