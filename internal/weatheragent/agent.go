@@ -6,10 +6,10 @@ import (
 	"github.com/labstack/echo"
 )
 
-func New(cwp CurrentWeatherProvider, fwp ForecastWeatherProvider) *WeatherAgent {
+func New(awp ActualWeatherProvider, fwp ForecastWeatherProvider) *WeatherAgent {
 	return &WeatherAgent{
 		echoInstance:     echo.New(),
-		currentProvider:  cwp,
+		actualProvider:   awp,
 		forecastProvider: fwp,
 	}
 }
@@ -22,28 +22,26 @@ func (wa *WeatherAgent) defaultHandler(c echo.Context) error {
 		return c.String(400, "lon and lat must be provided")
 	}
 
-	if wa.currentProvider == nil {
-		return c.String(500, "currentProvider is not set")
-	}
-
-	if wa.forecastProvider == nil {
-		return c.String(500, "forecastProvider is not set")
-	}
-
 	resp := AgentResponse{
-		Current:  Weather{},
+		Actual:   Weather{},
 		Forecast: Weather{},
 	}
 
-	if c.FormValue("current") == "true" {
-		current, err := wa.currentProvider.GetCurrent(lon, lat)
+	if c.FormValue("actual") == "true" {
+		if wa.actualProvider == nil {
+			return c.String(500, "currentProvider is not set")
+		}
+		actual, err := wa.actualProvider.GetActual(lon, lat, time.Now())
 		if err != nil {
 			return c.String(500, err.Error())
 		}
-		resp.Current = current
+		resp.Actual = actual
 	}
 
 	if c.FormValue("forecast") == "true" {
+		if wa.forecastProvider == nil {
+			return c.String(500, "forecastProvider is not set")
+		}
 		var (
 			forecast Weather
 			err      error

@@ -9,8 +9,15 @@ type TimeISO8601 struct {
 	time.Time
 }
 type ForecastObject struct {
-	Time []TimeISO8601 `json:"time"`
-	Data []float64     `json:"temperature_2m"`
+	Time           []TimeISO8601 `json:"time"`
+	Temp_2m        []float64     `json:"temperature_2m"`
+	Wind_10m       []float64     `json:"wind_speed_10m"`
+	Gusts_10m      []float64     `json:"wind_gusts_10m"`
+	WindDir_10m    []float64     `json:"wind_direction_10m"`
+	CloudCoverLow  []float64     `json:"cloud_cover_low"`
+	CloudCoverMid  []float64     `json:"cloud_cover_mid"`
+	CloudCoverHigh []float64     `json:"cloud_cover_high"`
+	WeatherCode    []float64     `json:"weathercode"`
 }
 
 type Forecast struct {
